@@ -1,6 +1,6 @@
-## Data Structure Overview and Important points
-### Array/List
-1. Time Complexity (n = # of elements in the list, k = # of elements used in operation)
+# Data Structure Overview and Important points
+## Array/List
+### Time Complexity (n = # of elements in the list, k = # of elements used in operation)
 1) Get - O(1)
 2) Set - O(1)
 3) Append - O(1)
@@ -14,22 +14,22 @@
 11) Get Slice - O(k)
 12) Del Slice - O(n)
 
-2. Common use cases
+### Common use cases
 
-### Dict/Hashmap
-1. Time Complexity
+## Dict/Hashmap
+### Time Complexity
 1) Get - O(1), Worst Case O(n)
 2) Set - O(1), Worst Case O(n)
 3) In - O(1)
 4) Delete - O(1)
 
-2. Common use cases
+### Common use cases
 
 
-### Set
-1. Time Complexity
+## Set
+### Time Complexity
 1) **In - O(1),better than list, but worst case still O(n)
 
-2. Common use cases
+### Common use cases
 
 ## Some useful pythonic functions
