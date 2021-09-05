@@ -122,7 +122,7 @@ class Solution:
 思路其实就是：  
 1）把start和target放进两个queue里面  
 2）用两个map记录走过的点及其step  
-3) 返回条件是两者相遇，即从A出发遍历的点出现在了B的map里
+3）返回条件是两者相遇，即从A出发遍历的点出现在了B的map里
 ```
 class Solution:
     def minKnightMoves(self, x: int, y: int) -> int:
