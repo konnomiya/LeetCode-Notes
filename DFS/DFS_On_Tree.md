@@ -24,16 +24,16 @@ def dfs(node, state):
 ```
 
 ## 思考 —— 怎么定义一个recursive function?
-**1. Return Value(Passing value up from child to parent)**
+**1. Return Value(Passing value up from child to parent)**  
 What do we want to return after visiting a node. 例如，max depth problem里我们返回the max depth for the current node's subtree -> 以当前节点为跟的子树的最大深度。  
 Use return value to pass information from children to parent.
 
-**2. Identify State(s)(Passing value down from parent to child)**
+**2. Identify State(s)(Passing value down from parent to child)**  
 What states do we need to maintain to compute the return value for the current node. For example, to know if the current node's value is larger than its parent, 
 we have to maintain the parent's value as state. States becomes DFS's function arguments. Use states to pass information from parent to children.
 
-## Coding 的两种形式(or 模板)：Using return value VS. Global variable
-以找二叉树的最大值为例：
+## Coding 的两种形式(or 模板)：Using return value VS. Global variable  
+以找二叉树的最大值为例：  
 1. Using return value (divide and conquer 分治)  
 One way to solve it is to use return value to pass the maximum value we have encountered back to parent node, and let the parent node compare it with the return value from the other child. This is more of a divide and conquer approach.  
 翻译一下，这种写法的思路就是：这个function本身返回的值代表“以该节点为根的子树的最大值”，那么我们知道了左子树和右子树分别的最大值后，跟当前(根)的值相比，就知道了整棵树的最大值。
