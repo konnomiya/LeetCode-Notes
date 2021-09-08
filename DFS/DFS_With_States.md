@@ -97,6 +97,7 @@ def word_break(s, words):
           break
     memo[i] = ok
     return ok
+   return dfs(0)
 ```
 
 Time Complexity: O(s * w * max(w[i]))
