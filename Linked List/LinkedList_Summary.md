@@ -237,5 +237,56 @@ def middleNode(self, head: Optional[ListNode]) -> Optional[ListNode]:
             slow = slow.next
         return slow
 ```
+### 判断链表是否有环 - LeetCode 141
+#### 简单做法
+1. 遍历链表，用一个set来存储遇到的节点，如果再次遇到说明有环
 
+#### 不用额外空间的做法
+1. 快慢指针经典题，快指针走两步慢指针走一步，如果相遇说明有环
+```
+def hasCycle(self, head: Optional[ListNode]) -> bool:
+        slow = fast = head
+        while fast and fast.next:
+            fast = fast.next.next
+            slow = slow.next
+            if slow == fast:
+                return True
+        return False
+```
+### 找有环链表的起点 - LeetCode 142
+1. 这道题就包含了上一道题。假设相遇时慢指针走了k步，那么快指针一定走了2k步   
+2. 假设环的起点到相遇点的距离是m,那么快指针要再走k-m步到达起点，而慢指针如果再从头开始走k-m步，也能走到起点  
+3. 事实：k是环的长度的整数倍  
+4. 背图！
+```
+def detectCycle(self, head: ListNode) -> ListNode:
+        if not head:
+            return None
+        
+        intersection = self.getIntersection(head)
+        if not intersection:
+            return None
+        
+        p1 = head
+        p2 = intersection
+        while p1 != p2:
+            p1 = p1.next
+            p2 = p2.next
+        return p1
+    
+    def getIntersection(self, head):
+        slow = fast = head
+        while fast and fast.next:
+            fast = fast.next.next
+            slow = slow.next
+            if slow == fast:
+                return fast           
+        return None
+```
+![image](https://user-images.githubusercontent.com/31752886/141183184-1c4b94e6-e10c-4ad9-b96f-2f14250b1808.png)
 
+### 相交链表 - LeetCode 160
+这道题相当神奇
+#### 简单做法
+跟判断有没有环类似，遍历一个链表，把遍历过的点放入set中，再遍历另一个链表，如果有相交点，就会在set里找到
+#### 最优做法
