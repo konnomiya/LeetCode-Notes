@@ -113,4 +113,129 @@ def reverseKGroup(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
         return prev
         
 ```
-### 合并两个有序链表
+### 合并两个有序链表 - LeetCode 21
+最佳解法： 
+1. 初始化一个dummy Node  
+2. 比较l1 and l2 's val, 如果l1的值小于l2, 说明dummy接下来要连接的应该是l1, 反之亦然  
+3. 如果还有剩就应该再连接剩下的  
+* 注意：移动的不是dummy，是指向dummy的指针head  
+```
+def mergeTwoLists(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        dummy = curr = ListNode(-1)
+        while l1 and l2:
+            if l1.val < l2.val:
+                curr.next = l1
+                l1 = l1.next
+            else:
+                curr.next = l2
+                l2 = l2.next
+            curr = curr.next
+        curr.next = l1 if l1 else l2
+        return dummy.next
+```
+### 合并k个有序链表 - LeetCode 23
+#### 分治做法
+1. 分治做法是可以联系到上面的“合并两个有序链表”的  
+2. 思路就是先分成两半，不断分成两半直到不能再分，再把所有链表先两两合并，在此之上继续两两合并，直到合成一条有序链表  
+```
+def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+        if not lists:
+            return None
+        if len(lists) == 1:
+            return lists[0]
+        mid = len(lists) // 2
+        left, right = self.mergeKLists(lists[:mid]), self.mergeKLists(lists[mid:])
+        return self.merge(left, right)
+    
+    def merge(self, l1, l2):
+        dummy = curr = ListNode(-1)
+        while l1 and l2:
+            if l1.val < l2.val:
+                curr.next = l1
+                l1 = l1.next
+            else:
+                curr.next = l2
+                l2 = l2.next
+            curr = curr.next
+        curr.next = l1 if l1 else l2
+        return dummy.next
+```
+#### 用优先队列的做法
+list里面有k个头结点，怎样快速找出值最小的那个节点？--> 用priorityqueue, 这样每次都能得出k个点里最小的那个.  
+
+之后就是常规步骤：  
+1. 得到最小的节点，然后移动指向dummy node的指针把它连上dummy node  
+-> 因为我们最终的目标是返回dummy.next  
+2. 移动1里面的指针  
+3. 查看当前node.next是否为空，不为空的话就放进queue里继续比较  
+```
+def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+        class Wrapper():
+            def __init__(self, node):
+                self.node = node
+                
+            def __lt__(self, other):
+                return self.node.val < other.node.val
+        
+        
+        head = dummy = ListNode(-1)
+        q = PriorityQueue()
+        for l in lists:
+            if l:
+                q.put(Wrapper(l))
+                       
+        while not q.empty():
+            node = q.get().node
+            head.next = node
+            head = head.next
+            if node.next:
+                q.put(Wrapper(node.next))
+        return dummy.next
+```
+### 单链表的倒数第k个节点
+1. 一个事实：倒数第k个节点，正数走n-k步可以到达  
+2. 所以只要知道n再来一个for loop，正数也能找到。问题是对于链表要知道n，我们要先遍历一遍链表，这样就要two pass才能找到正数n-k的节点  
+3. 所以one pass做法：先用1个pointer走k步，那么它剩下n-k步到达终点；此时再用另一个pointer从head开始跟前一个pointer一起走n-k步，那么第二个pointer最终会到达倒数第k个node
+```
+def findFromEnd(self, head, k):
+        p1 = p2 = head
+        for _ in range(k):
+            p1 = p1.next
+            
+        while p1:
+            p2 = p2.next
+            p1 = p1.next
+        return p2
+```
+### 删除倒数第k个节点 - LeetCode 19
+1. 要删除第k个节点，我们就要找到倒数第k+1个节点，让它指向倒数第k-1个节点 
+```
+def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        dummy = ListNode(-1)
+        dummy.next = head
+        prev = self.findFromEnd(dummy, n + 1)
+        prev.next = prev.next.next
+        return dummy.next
+    
+    def findFromEnd(self, head, k):
+        p1 = p2 = head
+        for _ in range(k):
+            p1 = p1.next
+            
+        while p1:
+            p2 = p2.next
+            p1 = p1.next
+        return p2
+```
+### 找到链表的中间节点 - LeetCode 876
+1. 双指针经典题，fast指针以两倍速走，slow一倍速走，这样当fast走到终点时，slow就停在了middle
+```
+def middleNode(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        slow = fast = head
+        while fast and fast.next:
+            fast = fast.next.next
+            slow = slow.next
+        return slow
+```
+
+
