@@ -78,3 +78,38 @@ def reverseBetween(self, head: Optional[ListNode], left: int, right: int) -> Opt
         return reverseFirstN(head, n)
         
 ```
+### k个一组翻转链表 - Leetcode 25
+1. 这个问题其实包含两个子问题：1）翻转两点之间的链表 2） 重复多次1）的step直到不满足条件  
+2. 那么翻转a, b之间的链表应该怎么写呢？-> 翻转一整条链表其实是翻转a和None之间，那么翻转a和b之间只要把while循环的条件改掉即可，如下
+```
+def reverse(self, a, b):
+        prev, curr = None, a
+        while curr != b:
+            curr.next, prev, curr = prev, curr, curr.next
+        return prev
+```
+3. 那么子问题一解决，假设我们当前是a，怎么找到距离它k的节点b? 整一个range(k)的for 循环就可以了  
+4. 我们相信整个函数能返回“以某个节点起始的翻转好了kgrop的链表的头结点”，所以a.next要等于它  
+5. a和b之间经过上面的reverse函数已经翻转好了，假设a是最初的节点，想象一下，我们要返回的就是经过reverse函数翻转的新head  
+```
+def reverseKGroup(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
+        if not head:
+            return None
+        
+        a = b = head
+        for _ in range(k):
+            if not b:
+                return head
+            b = b.next
+            
+        new_head = self.reverse(a, b)
+        a.next = self.reverseKGroup(b, k)
+        return new_head
+    
+    def reverse(self, a, b):
+        prev, curr = None, a
+        while curr != b:
+            curr.next, prev, curr = prev, curr, curr.next
+        return prev
+        
+```
