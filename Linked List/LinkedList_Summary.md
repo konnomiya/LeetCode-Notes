@@ -290,3 +290,44 @@ def detectCycle(self, head: ListNode) -> ListNode:
 #### 简单做法
 跟判断有没有环类似，遍历一个链表，把遍历过的点放入set中，再遍历另一个链表，如果有相交点，就会在set里找到
 #### 最优做法
+1. 如果两个链表都不为空，我们分别遍历两个链表   
+2. 如果其中遍历完短的，我们让该指针遍历长的;同理长的遍历完继续遍历短的    
+3. 其实相当于补全了短的缺少的开头，就是这样最终两个指针能同时达到相交点  
+4. 背图！ 
+```
+def getIntersectionNode(self, headA: ListNode, headB: ListNode) -> ListNode:
+        if not headA or not headB:
+            return None
+        
+        p1, p2 = headA, headB
+        while p1 != p2:
+            p1 = p1.next if p1 else headB
+            p2 = p2.next if p2 else headA
+        return p1
+```
+![image](https://user-images.githubusercontent.com/31752886/141187917-a255c754-bba2-4668-8f7e-eb5d1cd455c7.png)
+
+### 复制一个链表 - LeetCode
+#### 正常做法
+1. 用一个hashmap建立就节点和新节点的对应关系
+2. 遍历一遍旧链表，建立新链表
+3. 再遍历一遍旧链表，把新链表的random的关系也连接上
+```
+    def copyRandomList(self, head: 'Node') -> 'Node':
+        # key is old node, value is new node
+        node_map = dict()
+        dummy = Node(0, None, None)
+        new_head, pointer = dummy, head
+        while pointer:
+            new_node = Node(pointer.val, pointer.next, None)
+            node_map[pointer] = new_node
+            new_head.next = new_node
+            new_head = new_head.next
+            pointer = pointer.next
+        pointer = head
+        while pointer:
+            if pointer.random:
+                node_map[pointer].random = node_map[pointer.random]
+            pointer = pointer.next
+        return dummy.next
+```
