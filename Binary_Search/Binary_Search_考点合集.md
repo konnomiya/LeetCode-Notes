@@ -258,10 +258,11 @@ def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
 据说M家面试出现过:), 要求能logn   
 两个关键点：  
 1. 找适合的end/right
-2. 找到之后正常二分  
+2. 找到之后正常二分   
+
 思路：
-1. left = 0, right = 1, 每次将间隔扩大两倍，直到找到比target大的元素的位置
-2. 这就有点像一个二叉树的每一层节点都是2^i个
+4. left = 0, right = 1, 每次将间隔扩大两倍，直到找到比target大的元素的位置
+5. 这就有点像一个二叉树的每一层节点都是2^i个
 ```
 def searchInInfiniteNumbers(nums, target):
     left, right = 0, 1
