@@ -278,7 +278,7 @@ def searchInInfiniteNumbers(nums, target):
 3. https://blog.51cto.com/neilhappy/1142075
 ## Capacity To Ship Packages Within D Days - 应用题 LeetCode 1011
 思路：  
-写了[memo](https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/discuss/1576716/Python-solution-using-binary-search-memo)
+写了[memo](https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/discuss/1576716/Python-solution-using-binary-search-memo)   
 基本思路就是想象有一个capacity的array, 下界是max(weights)，上界是sum(weights)，要在这个array找到合适点，使得req_days <= d days   
 如果我们有一个helper function帮助filter: req_days <= d days, 再次可以得到FFFTTTTT   
 所以转化成find first true了
