@@ -310,7 +310,7 @@ def feasible(weights, max_weight, days):
                 min_capacity = mid_point + 1
         return boundary_index
 ```
-# Koko Eating Bananas - LeetCode 875
+## Koko Eating Bananas - LeetCode 875
 这道题的框架跟上面是基本一样的，就是计算req_hours的时候还不用那么麻烦，因为题目说了pile < k，koko就不吃了，用ceiling就可以算出来  
 ```
 def minEatingSpeed(self, piles: List[int], h: int) -> int:
