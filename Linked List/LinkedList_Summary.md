@@ -54,7 +54,7 @@ def reverseN(self, head, n):
 
 ### 翻转链表的一部分 - Leetcode 92
 1. 题目要求翻转某个区间[left, right] or [m, n]之间的链表, 假设left = 1, 问题就变成了翻转前n个节点，所以这是base case  
-2. left != 1的话，对于head,来说是翻转前n个节点，对于head.next来说，是从第**m-1**个元素开始翻转**n-1**个节点，以此类推  
+2. left == 1的话，对于head,来说是翻转前n个节点，对于head.next来说，是从第**m-1**个元素开始翻转**n-1**个节点，以此类推  
 ```
 def reverseBetween(self, head: Optional[ListNode], left: int, right: int) -> Optional[ListNode]:
         if left == 1:
